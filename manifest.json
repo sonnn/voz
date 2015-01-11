@@ -1,0 +1,48 @@
+{
+    "name": "voz_living",
+    "version": "0.0.4",
+    "manifest_version": 2,
+    "description": "voz ext",
+    "icons": {
+        "16": "images/icon-16.png",
+        "128": "images/icon-128.png"
+    },
+    "page_action": {
+        "default_icon": {
+            "16": "images/icon-16.png",
+            "32": "images/icon-32.png"
+        },
+        "default_title": "voz living"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.vozforums.com/*",
+                "http://*.vozforums.com/*",
+                "http://www.vozforums.com/*"
+            ],
+            "css": [
+                "styles/font-awesome.css",
+                "styles/main.css"
+            ],
+            "js": [
+                "libs/react-with-addons.min.js",
+                "libs/jquery.js",
+                // "libs/taffy-min.js",
+                "libs/require.js",
+                "scripts/contentscript.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": false
+        }
+    ],
+    "permissions": [
+      "tabs"
+    ],
+    "web_accessible_resources": [
+        "scripts/module/*",
+        "scripts/*",
+        "libs/*",
+        "fonts/*"
+    ]
+}
