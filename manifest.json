@@ -19,7 +19,8 @@
             "matches": [
                 "*://*.vozforums.com/*",
                 "http://*.vozforums.com/*",
-                "http://www.vozforums.com/*"
+                "http://www.vozforums.com/*",
+                "http://localhost/*"
             ],
             "css": [
                 "styles/font-awesome.css",

@@ -1,4 +1,4 @@
-define(['thread'],function(Thread){
+define(['models/thread'],function(Thread){
 	var threadsModule;
 
 	threadsModule = function(){
@@ -11,11 +11,11 @@ define(['thread'],function(Thread){
 		if(!respone){
 			$("#threadslist tbody tr").each(function(i, el){
 				if($(el).find("td[id^='td_threadtitle_']").length > 0) threads.push(new Thread(el));
-			});	
+			});
 		}else{
 			$("#threadslist tbody tr", respone).each(function(i, el){
 				if($(el).find("td[id^='td_threadtitle_']").length > 0) threads.push(new Thread(el));
-			});	
+			});
 		}
 		return threads;
 	}
@@ -37,8 +37,8 @@ define(['thread'],function(Thread){
 			render: function() {
 				var self = this,
 				rowTemplate = function(thread) {
-			      	return React.createElement("tr", {"className": thread.getBackgroundColor()}, 
-			      		React.createElement("td", null, 
+			      	return React.createElement("tr", {"className": thread.getBackgroundColor()},
+			      		React.createElement("td", null,
 			      			React.createElement("a", {"href": thread.href }, thread.name ),
 			      			React.createElement("div", {"className": "thread-owner" }, thread.owner.renderInfo()),
 			      			thread.renderDirection()
@@ -99,8 +99,8 @@ define(['thread'],function(Thread){
 		  	},
 		  	render: function() {
 			    return React.createElement("table", {className: "table table-hover table-striped table-condensed"},
-			    	React.createElement("thead", null, 
-			    		React.createElement("tr", null, 
+			    	React.createElement("thead", null,
+			    		React.createElement("tr", null,
 			    			React.createElement("th", null, "Thread"),
 			    			React.createElement("th", null, "Last Post"),
 			    			React.createElement("th", null, "Replies"),

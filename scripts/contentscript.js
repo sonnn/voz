@@ -12,12 +12,12 @@ require.load = function(ctx, module, url){
     }
   }
   xhr.send(null);
-} 
+}
 
 requirejs.config({
-    "baseUrl": "../scripts/module"
+    "baseUrl": "../scripts/"
 });
 
-requirejs(["../app"],function(app){
+requirejs(["app"],function(app){
   app.init();
 });

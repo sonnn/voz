@@ -1,21 +1,19 @@
 define([
-		'ads',
-		'utils',
-		'threads',
-		'thread'
-	],function(AdsModule, UtilsModule, ThreadsModule, ThreadModule){
+		'modules/ads',
+		'modules/utils',
+		'modules/threads'
+	],function(AdsModule, UtilsModule, ThreadsModule){
 		function init(){
 			// remove ads
 			AdsModule.remove();
-			
+
 			// thread init
 			if(UtilsModule.isThreadList()){
 				var threads = new ThreadsModule();
 				threads.init();
 			}else{
-				var thread = new ThreadsModule();
-				thread.init();
-			} 
+				
+			}
 		}
 
 		return {
