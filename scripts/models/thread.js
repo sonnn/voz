@@ -16,7 +16,7 @@ define(['models/user'],function(User){
             listLink: ""
         }
         this.views = 0;
-        this.status = ""; // not implement yet
+        this.status = "";
         this.living = {
             direction: "new",
             step: 0
@@ -26,6 +26,32 @@ define(['models/user'],function(User){
             this.parseThreadData(threadData);
         }
     };
+
+    thread.prototype.setLiving = function(direction, step){
+        this.living.direction = direction;
+        this.living.step = step;
+    }
+
+    thread.prototype.getBackgroundColor = function(){
+        if(this.sticky){
+            return "sticky"
+        }else{
+            switch(this.living.direction){
+                case "down":
+                    return "down"
+                    break;
+                case "up":
+                    return "up"
+                    break;
+                case "same":
+                    return "same"
+                    break;
+                default:
+                    return "new"
+                    break;
+            }
+        }
+    }
 
     thread.prototype.renderDirection = function(){
         if(!this.sticky){
@@ -40,7 +66,7 @@ define(['models/user'],function(User){
                                 React.createElement("i", {"className": "fa fa-arrow-up" }, ""),
                                 React.createElement("span", null, " "+ this.living.step));
                     break;
-                case "new":
+                case "same":
                     return React.createElement("div", {"className": "thread-living" },
                                 React.createElement("i", {"className": "fa fa-circle" }, ""));
                     break;
@@ -53,32 +79,6 @@ define(['models/user'],function(User){
             return React.createElement("div", {"className": "thread-living" },
                         React.createElement("i", {"className": "fa fa-flag" }, ""));
         }
-    }
-
-    thread.prototype.getBackgroundColor = function(){
-        if(this.sticky){
-            return "sticky"
-        }else{
-            switch(this.living.direction){
-                case "down":
-                return "down"
-                break;
-            case "up":
-                return "up"
-                break;
-            case "same":
-                return "same"
-                break;
-            default:
-                return "new"
-                break;
-            }
-        }
-    }
-
-    thread.prototype.setLiving = function(direction, step){
-        this.living.direction = direction;
-        this.living.step = step;
     }
 
     thread.prototype.parseThreadData = function(data){
@@ -110,6 +110,9 @@ define(['models/user'],function(User){
         }
         this.views = tdViews.text();
         this.sticky = tdThreadName.text().indexOf("Sticky:") > -1;
+        this.status = $("img", tdStatus).attr("src").match(new RegExp(/([^\/]+)\.gif$/))[1];
+        this.rating = $("img[src^='images/rating/rating']", tdThreadName).attr('src') ?
+                        $("img[src^='images/rating/rating']", tdThreadName).attr('src').replace(/\D+/g,'') : 0;
     }
 
     return thread;

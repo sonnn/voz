@@ -43,8 +43,12 @@ define(['models/thread'],function(Thread){
 			      			React.createElement("div", {"className": "thread-owner" }, thread.owner.renderInfo()),
 			      			thread.renderDirection()
 		      			),
-			      		React.createElement("td", null, thread.lastPost.link ),
-			      		React.createElement("td", null, thread.replies.number ),
+			      		React.createElement("td", null,
+							React.createElement("a", { href: thread.lastPost.link }, thread.lastPost.text)
+						),
+			      		React.createElement("td", null,
+							React.createElement("a", { href: thread.replies.link }, thread.replies.number)
+						),
 			      		React.createElement("td", null, thread.views )
 		      		);
 			    };
@@ -62,12 +66,12 @@ define(['models/thread'],function(Thread){
 							var oldIndex = this.findInOldThread(newThreads[i].id)
 							if(oldIndex != null){
 								if(i > oldIndex){
-										newThreads[i].setLiving("down", i - oldIndex);
-									}else if(i === oldIndex){
-										newThreads[i].setLiving("same", 0);
-									}else{
-										newThreads[i].setLiving("up", oldIndex - i);
-									}
+									newThreads[i].setLiving("down", i - oldIndex);
+								}else if(i == oldIndex){
+									newThreads[i].setLiving("same", 0);
+								}else{
+									newThreads[i].setLiving("up", oldIndex - i);
+								}
 							}else{
 								newThreads[i].setLiving("new", 0);
 							}
