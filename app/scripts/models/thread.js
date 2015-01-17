@@ -6,7 +6,7 @@ define(['models/user'],function(User){
         this.href = "";
         this.owner = {};
         this.sticky = false;
-        this.rating = 0; // not implement yet
+        this.rating = 0;
         this.lastPost = {
             text: "",
             link: ""
@@ -21,6 +21,7 @@ define(['models/user'],function(User){
             direction: "new",
             step: 0
         };
+        this.preview = "";
 
         if(threadData){
             this.parseThreadData(threadData);
@@ -113,6 +114,18 @@ define(['models/user'],function(User){
         this.status = $("img", tdStatus).attr("src").match(new RegExp(/([^\/]+)\.gif$/))[1];
         this.rating = $("img[src^='images/rating/rating']", tdThreadName).attr('src') ?
                         $("img[src^='images/rating/rating']", tdThreadName).attr('src').replace(/\D+/g,'') : 0;
+    }
+
+    thread.prototype.loadThreadPreview = function(callback){
+        if(this.preview.length == 0){
+            var url = "http://vozforums.com/showthread.php?t=" + this.id;
+
+            $.ajax({
+                url: url
+            }).success(function(data){
+                console.log(data);
+            });
+        }
     }
 
     return thread;

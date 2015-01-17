@@ -12,8 +12,8 @@ define([
 				var threads = new ThreadsModule();
 				threads.init();
 			}else{
-				
-			}
+				 
+ 			}
 		}
 
 		return {

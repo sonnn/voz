@@ -14,6 +14,11 @@
         },
         "default_title": "voz living"
     },
+    "background": {
+        "scripts": [
+            "scripts/chromereload.js"
+        ]
+    },
     "content_scripts": [
         {
             "matches": [
@@ -27,7 +32,7 @@
                 "styles/main.css"
             ],
             "js": [
-                "libs/react-with-addons.min.js",
+                "libs/react-with-addons.js",
                 "libs/jquery.js",
                 // "libs/taffy-min.js",
                 "libs/require.js",

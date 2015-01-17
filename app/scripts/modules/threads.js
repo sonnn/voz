@@ -37,7 +37,7 @@ define(['models/thread'],function(Thread){
 			render: function() {
 				var self = this,
 				rowTemplate = function(thread) {
-			      	return React.createElement("tr", {"className": thread.getBackgroundColor()},
+			      	return React.createElement("tr", {"className": thread.getBackgroundColor(), "onClick": self.props.setThreadPreview.bind(null, thread)},
 			      		React.createElement("td", null,
 			      			React.createElement("a", {"href": thread.href }, thread.name ),
 			      			React.createElement("div", {"className": "thread-owner" }, thread.owner.renderInfo()),
@@ -53,6 +53,18 @@ define(['models/thread'],function(Thread){
 		      		);
 			    };
 			    return React.createElement("tbody", null, this.props.rows.map(rowTemplate));
+			}
+		});
+
+		var ThreadPreviewModal = React.createClass({ displayName: "ThreadPreview",
+			render: function(){
+				var modalTemplate = function(thread){
+					return React.createElement("div", null,
+						React.createElement("div", {className: "thread-title"}, thread.name),
+						React.createElement("div", {className: "thread-content"}, self.state.threadContent)
+					)
+				};
+				return React.createElement("div", null, modalTemplate(this.props.thread))
 			}
 		});
 
@@ -96,23 +108,33 @@ define(['models/thread'],function(Thread){
 				return null;
 			},
 			getInitialState: function() {
-			    return {threads: self.getThreads()};
+			    return {
+					threads: self.getThreads()
+				}
 		  	},
 		  	componentDidMount: function(){
 		  		this.reloadThread();
 		  	},
+			setThreadPreview: function(thread){
+				this.setState({
+					threadPreview: thread
+				});
+			},
 		  	render: function() {
-			    return React.createElement("table", {className: "table table-hover table-striped table-condensed"},
-			    	React.createElement("thead", null,
-			    		React.createElement("tr", null,
-			    			React.createElement("th", null, "Thread"),
-			    			React.createElement("th", null, "Last Post"),
-			    			React.createElement("th", null, "Replies"),
-			    			React.createElement("th", null, "Views")
-		    			)
-		    		),
-		        	React.createElement(ThreadsList, {rows: this.state.threads})
-		      	);
+			    return React.createElement("div", { className: "threads-list" },
+					React.createElement("table", {className: "table table-hover table-striped table-condensed"},
+				    	React.createElement("thead", null,
+				    		React.createElement("tr", null,
+				    			React.createElement("th", null, "Thread"),
+				    			React.createElement("th", null, "Last Post"),
+				    			React.createElement("th", null, "Replies"),
+				    			React.createElement("th", null, "Views")
+			    			)
+			    		),
+			        	React.createElement(ThreadsList, {rows: this.state.threads, setThreadPreview: this.setThreadPreview})
+					),
+					React.createElement(ThreadPreviewModal, { thread: this.state.threadPreview })
+				)
 		  	}
 		});
 
